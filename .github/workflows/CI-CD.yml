@@ -30,14 +30,14 @@ jobs:
 
       # test
       - name: test
-        run: echo ${{ github.GITHUB_RUN_ID }}
+        run: echo ${{ github.run_id }}
 
       # Build and Push
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: ${{ env.DOCKER_IMAGE }}:${{ github.GITHUB_RUN_ID }}
+          tags: ${{ env.DOCKER_IMAGE }}:${{ github.run_id }}
           platforms: linux/arm64
 
       # - name: Build Image
