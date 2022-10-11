@@ -37,11 +37,16 @@ jobs:
 
   deploy:
     name: Deploy
+    environment: deployment
     runs-on: [self-hosted, OCI_runner] # 미리 생성한 Runner에 접속, 직접 만든 러너 중 OCI_runner 이라는 라벨이 붙은 러너를 사용
     needs: build # 선행 Build job이 끝난 후에 실행
     steps:
       # Checkout Repository
       - uses: actions/checkout@v2.1.0
+
+      # Create Environment File
+      - name: Create Environment File
+        run: echo ${{ env }} >> .env
 
       # Deploy
       - name: Run Docker Compose
