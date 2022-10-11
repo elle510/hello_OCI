@@ -38,6 +38,11 @@ jobs:
   deploy:
     name: Deploy
     runs-on: [self-hosted, macbook]
+    needs: build
     steps:
+      # Checkout Repository
+      - uses: actions/checkout@v2.1.0
+
+      # Deploy
       - name: Run Docker Compose
         run: docker-compose up -d
