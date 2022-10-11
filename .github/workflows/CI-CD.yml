@@ -6,29 +6,17 @@ env:
   DOCKER_IMAGE: ghcr.io/heavyrisem/hello_OCI
 
 jobs:
-  armv7_job:
-    # The host should always be Linux
+  build:
+    name: Build
     runs-on: ubuntu-18.04
-    name: Build on ubuntu-18.04 armv7
     steps:
+      # Checkout Repository
       - uses: actions/checkout@v2.1.0
-      - uses: uraimo/run-on-arch-action@v2
-        name: Run commands
-        id: runcmd
-        with:
-          arch: aarch64
-          distro: ubuntu18.04
 
-          # Not required, but speeds up builds by storing container images in
-          # a GitHub package registry.
-          githubToken: ${{ github.token }}
+      # Setup Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-          # Set an output parameter `uname` for use in subsequent steps
-          run: |
-            uname -a
-            echo ::set-output name=uname::$(uname -a)
-
-      - name: Get the output
-        # Echo the `uname` output parameter from the `runcmd` step
-        run: |
-          echo "The uname output was ${{ steps.runcmd.outputs.uname }}"
+      # Build
+      - name: Build Image
+        run: docker buildx build --platform linux/arm64 -t ${{DOCKER_IMAGE}} .
