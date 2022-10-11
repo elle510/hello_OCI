@@ -1,0 +1,25 @@
+name: CI-CD
+on: [push]
+
+env:
+  DOCKER_NAME: hello_OCI
+  DOCKER_IMAGE: ghcr.io/heavyrisem/hello_OCI
+
+jobs:
+  build:
+    name: Build Image
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2.1.0
+      - uses: uraimo/run-on-arch-action@v2
+        name: Run Commands
+        id: runcmd
+        with:
+          arch: aarch64
+        run: |
+          uname -a
+          echo ::set-output name=uname::$(uname -a)
+
+      - name: Get the output
+        run: |
+          echo "The uname output was ${{ steps.runcmd.outputs.uname }}"
