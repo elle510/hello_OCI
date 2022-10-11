@@ -3,6 +3,6 @@ version: "3"
 services:
   hello_oci:
     container_name: hello_oci
-    build: .
+    image: ghcr.io/heavyrisem/hello_oci
     ports:
       - 3001:3001

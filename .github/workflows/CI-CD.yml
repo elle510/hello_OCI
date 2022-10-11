@@ -37,8 +37,8 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: ${{ env.DOCKER_IMAGE }}:${{ github.run_id }}
-          platforms: linux/arm64
+          tags: ${{ env.DOCKER_IMAGE }}:${{ github.run_id }},${{ env.DOCKER_IMAGE }}:latest
+          platforms: linux/arm64,linux/amd64
 
       # - name: Build Image
       #   run: docker buildx build --platform linux/arm64 -t ${{env.DOCKER_IMAGE}} .
