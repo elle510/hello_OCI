@@ -7,7 +7,7 @@ env:
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-18.04 # Github의 러너를 사용
+    runs-on: ubuntu-20.04 # Github의 러너를 사용
     steps:
       # Checkout Repository
       - uses: actions/checkout@v2.1.0
@@ -53,4 +53,4 @@ jobs:
 
       # Deploy
       - name: Run Docker Compose
-        run: docker-compose up -d
+        run: docker-compose up -d --force-recreate
