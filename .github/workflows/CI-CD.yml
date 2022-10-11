@@ -2,8 +2,8 @@ name: CI-CD
 on: [push]
 
 env:
-  DOCKER_NAME: hello_OCI
-  DOCKER_IMAGE: ghcr.io/heavyrisem/hello_OCI
+  DOCKER_NAME: hello_oci
+  DOCKER_IMAGE: ghcr.io/heavyrisem/hello_oci
 
 jobs:
   build:
