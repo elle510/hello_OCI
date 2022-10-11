@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  hello_oci_runner:
+    container_name: hello_oci_runner
+    image: myoung34/github-runner
+    env_file:
+      - ./runner.env
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
