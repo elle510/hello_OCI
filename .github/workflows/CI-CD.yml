@@ -51,6 +51,14 @@ jobs:
         env:
           SECRETS_CONTEXT: ${{ toJson(secrets) }}
 
+      # Login to ghcr
+      - name: Login to ghcr
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }} # 사용자 깃허브 아이디
+          password: ${{ secrets.GHCR_PAT }} # Settings > Secrets > Actions 의 GHCR_PAT 값을 불러옴
+
       # Deploy
       - name: Run Docker Compose
         run: docker-compose up -d --force-recreate
