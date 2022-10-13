@@ -4,4 +4,10 @@ services:
   hello_oci:
     container_name: hello_oci
     image: ghcr.io/heavyrisem/hello_oci
+    networks:
+      - nginx
     env_file: .env
+
+networks:
+  nginx: # nginx에 라우팅 되기 위해 nginx와 같은 네트워크에 연결
+    external: true
