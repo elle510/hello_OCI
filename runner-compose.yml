@@ -5,7 +5,10 @@ services:
     container_name: hello_oci_runner
     image: interaction/github-actions-runner:latest
     restart: always
+    environment:
+      RUNNER_WORKDIR: ${PWD}/_work
     env_file:
       - ./runner.env
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ${PWD}/_work:${PWD}/_work
