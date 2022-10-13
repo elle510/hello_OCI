@@ -59,16 +59,8 @@ jobs:
           username: ${{ github.actor }} # 사용자 깃허브 아이디
           password: ${{ secrets.GHCR_PAT }} # Settings > Secrets > Actions 의 GHCR_PAT 값을 불러옴
 
-      - name: TEST
-        run: |
-          docker ps
-          echo $PWD
-          ls
-
       # Deploy
       - name: Run Docker Compose
         run: |
-          docker pull ghcr.io/heavyrisem/hello_oci
+          docker pull ${{ env.DOCKER_IMAGE }}
           docker-compose up -d --force-recreate
-        env:
-          COMPOSE_IGNORE_ORPHANS: True # Runner와 Orphans네이밍이 겹치는 문제 무시
