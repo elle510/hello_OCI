@@ -60,7 +60,10 @@ jobs:
           password: ${{ secrets.GHCR_PAT }} # Settings > Secrets > Actions 의 GHCR_PAT 값을 불러옴
 
       - name: TEST
-        run: docker ps
+        run: |
+          docker ps
+          echo $PWD
+          ls
 
       # Deploy
       - name: Run Docker Compose
