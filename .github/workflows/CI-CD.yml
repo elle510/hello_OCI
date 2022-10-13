@@ -1,4 +1,4 @@
-name: CI-CD
+name: CI-CD # Github Action 페이지 좌측 리스트에 표시될 이름
 on: [push] # Push 이벤트가 발생한 경우에 실행, 응용하면 특정 브랜치나 버전 태그 생성 이벤트도 등록 가능
 
 env:
@@ -37,7 +37,7 @@ jobs:
 
   deploy:
     name: Deploy
-    environment: deployment
+    environment: deployment # Github Environment에 정의된 환경변수셋을 이용
     runs-on: [self-hosted, OCI_runner] # 미리 생성한 Runner에 접속, 직접 만든 러너 중 OCI_runner 이라는 라벨이 붙은 러너를 사용
     needs: build # 선행 Build job이 끝난 후에 실행
     steps:
@@ -46,7 +46,7 @@ jobs:
 
       # Create Environment File
       - name: Create .env file
-        run: |
+        run: | # Github Environment로 지정한 값들을 .env 파일에 저장
           jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' <<< "$SECRETS_CONTEXT" > .env
         env:
           SECRETS_CONTEXT: ${{ toJson(secrets) }}
@@ -59,8 +59,10 @@ jobs:
           username: ${{ github.actor }} # 사용자 깃허브 아이디
           password: ${{ secrets.GHCR_PAT }} # Settings > Secrets > Actions 의 GHCR_PAT 값을 불러옴
 
+      # Pull Image
+      - name: Pull Docker Image
+        run: docker pull ${{ env.DOCKER_IMAGE }} # build job에서 빌드한 이미지를 불러오기
+
       # Deploy
       - name: Run Docker Compose
-        run: |
-          docker pull ${{ env.DOCKER_IMAGE }}
-          docker-compose up -d --force-recreate
+        run: docker-compose up -d --force-recreate # --force-recreate 인자를 통해 항상 컨테이너를 재생성하기 (.env 같은 compose 외부 요소의 변경을 반영)
