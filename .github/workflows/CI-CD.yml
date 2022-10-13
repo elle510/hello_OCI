@@ -54,6 +54,3 @@ jobs:
       # Deploy
       - name: Run Docker Compose
         run: docker-compose up -d --force-recreate
-
-      - name: test
-        run: echo $PWD pwd PWD
