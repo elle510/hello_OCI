@@ -4,7 +4,13 @@ services:
   hello_oci_runner:
     container_name: hello_oci_runner
     image: myoung34/github-runner
+    restart: always
     env_file:
       - ./runner.env
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker-compose:/usr/local/bin/docker-compose
+      - hello_oci_runner:/actions-runner
+
+volumes:
+  hello_oci_runner:
