@@ -5,7 +5,7 @@ services:
     container_name: hello_oci
     image: ghcr.io/elle510/hello_oci # ghcr에 있는 프로젝트 이미지를 불러옴
     ports:
-      - 3001:3001
+      - 80:3001
     networks:
       - nginx
     env_file: .env # .env 파일에 있는 환경변수들을 컨테이너 안으로 집어넣어줌
