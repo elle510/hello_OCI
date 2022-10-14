@@ -9,7 +9,7 @@ const app = express();
 
 app.get("*", (req, res) => {
   console.log("Hello OCI");
-  return res.send(`Hello OCI from ${os.hostname()}\n`);
+  return res.send(`Hello OCI from ${os.hostname()} v2\n`);
 });
 
 app.listen(PORT, () => {
